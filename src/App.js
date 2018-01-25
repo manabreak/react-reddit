@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import './App.css';
 
 function Post(props) {
@@ -19,13 +20,11 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch('https://www.reddit.com/r/programming.json')
-      .then(resp => resp.json())
-      .then(json => {
+    axios.get('https://www.reddit.com/r/programming.json')
+      .then(resp => {
         var postArr = [];
-        for (var i = 0, len = json.data.children.length; i < len; i++) {
-          const p = json.data.children[i];
-          postArr.push(p)
+        for (var i = 0, len = resp.data.data.children.length; i < len; i++) {
+          postArr.push(resp.data.data.children[i]);
         }
 
         this.setState({
